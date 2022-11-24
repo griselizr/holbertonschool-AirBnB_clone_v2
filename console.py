@@ -117,32 +117,26 @@ class HBNBCommand(cmd.Cmd):
         """ Create an object of any class,
         cmd_arg = 	Splits the string at the specified separator, and returns a list
         """
-        if not args:
+        cmd_arg = args.split(" ")
+        if not cmd_arg[0]:
             print("** class name missing **")
             return
-        cmd_arg = args.split(" ")
         if cmd_arg[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
         parts_strings = eval("{}()".format(cmd_arg[0]))
-        for i in cmd_arg[1:]:
+        for elements in cmd_arg[1:]:
             """starts at first argument with the command name"""
-        v = i.split('=', 1)
+        val = elements.split('=', 1)
         """splits argument as key and value"""
-        v = i[1]
-        if i[1][0] == '"':
-            v = v[1:-1].replace('_', ' ')
-        else:
-            if "." in v:
-                v = float(v)
-            else:
-                v = int(v)
-        setattr(parts_strings, i[0], eval(v[1]))
+        val[1] = val[1].replace('_', ' ')
+        setattr(parts_strings, val[0], eval(val[1]))
 
-        parts_strings.save()
-        print("{}".format(parts_strings.id))
         new_instance = HBNBCommand.classes[args]
         new_instance.save()
+        storage.save()
+        parts_strings.save()
+        print("{}".format(parts_strings.id))
         print(new_instance.id)
         storage.save()
 
