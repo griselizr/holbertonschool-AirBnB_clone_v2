@@ -118,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
         cmd_arg = 	Splits the string at the specified separator, and returns a list
         """
         cmd_arg = args.split(" ")
-        if not cmd_arg[0]:
+        if not cmd_arg:
             print("** class name missing **")
             return
         if cmd_arg[0] not in HBNBCommand.classes:
@@ -127,10 +127,10 @@ class HBNBCommand(cmd.Cmd):
         parts_strings = eval("{}()".format(cmd_arg[0]))
         for elements in cmd_arg[1:]:
             """starts at first argument with the command name"""
-        val = elements.split('=', 1)
-        """splits argument as key and value"""
-        val[1] = val[1].replace('_', ' ')
-        setattr(parts_strings, val[0], eval(val[1]))
+            val = elements.split('=')
+            """splits argument as key and value"""
+            val = val[1:-1].replace('_', ' ')
+            setattr(parts_strings, val[0], eval(val[1]))
 
         new_instance = HBNBCommand.classes[args]
         new_instance.save()
