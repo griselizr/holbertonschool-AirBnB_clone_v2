@@ -61,3 +61,7 @@ class FileStorage:
                 del self.__objects[key]
         except:
             pass
+
+    def close(self):
+        """ Close the files """
+        self.reload()
