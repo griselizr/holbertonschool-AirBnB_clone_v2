@@ -15,13 +15,13 @@ def hello_HBNB():
     return 'Hello HBNB!'
 
 
-@app.route('/hbnb')
+@app.route('/hbnb', strict_slashes=False)
 def hbnb():
     """return a string from hbnb route"""
     return 'HBNB'
 
 
-app.route('//c/<text>')
+app.route('/c/<text>', strict_slashes=False)
 
 
 def display_c(text):
