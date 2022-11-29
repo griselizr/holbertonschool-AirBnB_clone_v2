@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 
 
-""" start the Flask Web application by
+""" 
+start the Flask Web application by
 setting strict slashes to false 
 to configure the app itself
 return a string from route
