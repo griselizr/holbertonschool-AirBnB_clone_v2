@@ -4,9 +4,7 @@
 """ 
 start the Flask Web application by
 setting strict slashes to false 
-to configure the app itself
-return a string from route
-"""
+to configure the app itself"""
 
 from flask import Flask
 
@@ -16,6 +14,7 @@ app = Flask(__name__)
 
 @app.route('/', strict_slashes=False)
 def hello_holberton():
+    """return a string from route"""
     return 'Hello HBNB!'
 
 
