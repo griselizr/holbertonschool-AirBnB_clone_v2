@@ -2,8 +2,8 @@
 from flask import Flask
 
 app = Flask(__name__)
-""" setting strict slashes to false to configure the app itself"""
-"""return a string from route"""
+""" setting strict slashes to false to configure the app itself
+return a string from route"""
 
 
 @app.route('/', strict_slashes=False)
