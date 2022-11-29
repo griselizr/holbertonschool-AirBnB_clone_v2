@@ -1,10 +1,7 @@
 #!/usr/bin/python3
 
 
-""" 
-start the Flask Web application by
-setting strict slashes to false 
-to configure the app itself"""
+"""start the Flask Web application by"""
 
 from flask import Flask
 
