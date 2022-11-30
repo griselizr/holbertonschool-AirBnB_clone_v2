@@ -27,10 +27,11 @@ def display_c(text):
     return "C " + text.replace("_", " ")
 
 
+@app.route('/python/', strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
-def display_python(text):
+def display_python(text='is cool'):
     """return a string from python/text"""
-    return "Python " + text.replace("_", " ")
+    return "Python {}".format(text.replace("_", " "))
 
 
 if __name__ == '__main__':
