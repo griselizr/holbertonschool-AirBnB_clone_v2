@@ -1,10 +1,12 @@
 #!/usr/bin/python3
 """ This module define the Class Data Base for hbnb clone """
-
+import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker, scoped_session
 from os import getenv
-from models.base_model import BaseModel
+from sqlalchemy import inspect
+import models
+from models.base_model import BaseModel, Base
 from models.user import User
 from models.place import Place
 from models.state import State
@@ -29,13 +31,12 @@ class DBStorage:
             getenv('HBNB_MYSQL_HOST'),
             getenv('HBNB_MYSQL_DB'))
 
-        self.__engine = create_engine(
-            'mysql+mysqldb://{}:{}@{}/{}'.
-            format(*credentials), pool_pre_ping=True)
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
+                                      format(*credentials), pool_pre_ping=True)
 
         if getenv('HBNB_ENV') == 'test':
             # drop all tables
-            pass
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """
@@ -87,8 +88,9 @@ class DBStorage:
         session_factory = sessionmaker(
             bind=self.__engine, expire_on_commit=False)
         # Session = scoped_session(session_factory)
-        self.__session = scoped_session(session_factory)
+        Session -= scoped_session(session_factory)
+        self.__session = Session
 
     def close(self):
         """ Closing session """
-        self.__session.remove()
+        self.__session.close()
