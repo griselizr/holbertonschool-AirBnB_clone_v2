@@ -126,11 +126,19 @@ class HBNBCommand(cmd.Cmd):
             return
         parts_strings = eval("{}()".format(cmd_arg[0]))
         for elements in cmd_arg[1:]:
-            """starts at first argument with the command name"""
-            val = elements.split('=')
+            if "=" in elements:
+                """starts at first argument with the command name"""
+            key = elements.split('=')
             """splits argument as key and value"""
-            val = val[1:-1].replace('_', ' ')
-            setattr(parts_strings, val[0], eval(val[1]))
+            val = key[1:-1].replace('_', ' ')
+            setattr(parts_strings, key[0], eval(val[1]))
+
+        if "." in val:
+            parts_strings[key] = float(val)
+            try:
+                parts_strings[key] = int(val)
+            except:
+                pass
 
         new_instance = HBNBCommand.classes[args]
         new_instance.save()
