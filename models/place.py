@@ -6,7 +6,7 @@ from os import getenv
 from sqlalchemy.orm import relationship
 
 
-place_amenity = Table('place_amenity',
+place_amenity = Table('place_amenity', Base.metadata,
                       Column('amenity_id', String(60), ForeignKey(
                           'amenities.id'), nullable=False, primary_key=True),
                       Column('place_id', String(60), ForeignKey(
