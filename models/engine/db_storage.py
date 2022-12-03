@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 """ This module define the Class Data Base for hbnb clone """
-import sqlalchemy
+
+
 from sqlalchemy import create_engine
-from sqlalchemy.orm import Session, sessionmaker, scoped_session
+from sqlalchemy.orm import sessionmaker, scoped_session
 from os import getenv
-from sqlalchemy import inspect
-import models
+
+
 from models.base_model import BaseModel, Base
 from models.user import User
 from models.place import Place
