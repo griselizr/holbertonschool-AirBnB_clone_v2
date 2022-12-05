@@ -3,7 +3,7 @@
 
 """start the Flask Web application by"""
 
-from flask import Flask, render_template
+from flask import Flask, escape, render_template
 
 
 app = Flask(__name__)
@@ -40,10 +40,10 @@ def if_number(n):
     return "{} is a number".format(n)
 
 
-@app.route('/number_template/<int:num>', strict_slashes=False)
-def to_display_html(num):
+@app.route('/number_template/<int:n>', strict_slashes=False)
+def to_display_html(n):
     """return a HTML page only if n is an integer:"""
-    return render_template('5-number.html', num=num)
+    return render_template('5-number.html', n=n)
 
 
 if __name__ == '__main__':
