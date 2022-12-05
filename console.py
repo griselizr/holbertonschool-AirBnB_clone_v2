@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Console Module """
 import cmd
+import re
 import sys
 from models.base_model import BaseModel
 from models.__init__ import storage
@@ -124,10 +125,18 @@ class HBNBCommand(cmd.Cmd):
         if cmd_arg[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        parts_strings = eval("{}()".format(cmd_arg[0]))
-        for elements in cmd_arg[1:]:
-            if "=" in elements:
-                """starts at first argument with the command name"""
+        cmd_arg = {}
+        if len(cmd_arg) > 1:
+            for i, elements in enumerate(cmd_arg):
+                if i > 0:
+                    inside = re.search("'[@_!#$%^&*()<>?/\|}{~:]", elements)
+                if elements != inside:
+                    return
+        else:
+            parts_strings = eval("{}()".format(cmd_arg[0]))
+            for elements in cmd_arg[1:]:
+                if "=" in elements:
+                    """starts at first argument with the command name"""
             key = elements.split('=')
             """splits argument as key and value"""
             val = key[1:-1].replace('_', ' ')
@@ -135,9 +144,10 @@ class HBNBCommand(cmd.Cmd):
 
         if "." in val:
             parts_strings[key] = float(val)
+        else:
             try:
                 parts_strings[key] = int(val)
-            except:
+            except ValueError:
                 pass
 
         new_instance = HBNBCommand.classes[args]
