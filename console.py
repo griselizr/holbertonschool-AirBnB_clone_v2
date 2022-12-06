@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ Console Module """
 import cmd
-import re
 import sys
 from models.base_model import BaseModel
 from models.__init__ import storage
@@ -125,38 +124,23 @@ class HBNBCommand(cmd.Cmd):
         if cmd_arg[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        cmd_arg = {}
+        parts_strings = {}
         if len(cmd_arg) > 1:
-            for i, elements in enumerate(cmd_arg):
-                if i > 0:
-                    inside = re.search("'[@_!#$%^&*()<>?/\|}{~:]", elements)
-                if elements != inside:
-                    return
-        else:
-            parts_strings = eval("{}()".format(cmd_arg[0]))
-            for elements in cmd_arg[1:]:
-                if "=" in elements:
-                    """starts at first argument with the command name"""
-            key = elements.split('=')
-            """splits argument as key and value"""
-            val = key[1:-1].replace('_', ' ')
-            setattr(parts_strings, key[0], eval(val[1]))
+            for i in range(1, len((cmd_arg))):
+                if "=" not in cmd_arg[i]:
+                    continue
+                key, val = tuple(cmd_arg[i].split("="))
+                """starts at first argument with the command name"""
+                if val[0] == '"':
+                    """splits argument as key and value"""
+                    val = val.replace('_', ' ')
+                    val = val[1:-1]
+                parts_strings[key] = val
 
-        if "." in val:
-            parts_strings[key] = float(val)
-        else:
-            try:
-                parts_strings[key] = int(val)
-            except ValueError:
-                pass
-
-        new_instance = HBNBCommand.classes[args]
-        new_instance.save()
-        storage.save()
-        parts_strings.save()
-        print("{}".format(parts_strings.id))
-        print(new_instance.id)
-        storage.save()
+            new_instance = HBNBCommand.classes[cmd_arg[0]](**parts_strings)
+            new_instance.save()
+            print(new_instance.id)
+            storage.save()
 
     def help_create(self):
         """ Help information for the create method """
