@@ -64,6 +64,13 @@ button:hover {
     visibility: hidden;
 }
 
+.custom-popover .popover__content {
+    width: 300px;
+  }
+  .custom-popover .scrollable {
+    max-height: 100px;
+    overflow-y: auto;
+  }
 
 .locations:hover .popover {
     visibility: visible;
